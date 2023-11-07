@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:atende_sala/students/join_room.dart';
 import 'package:atende_sala/professors/create_room.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../reports/report_list.dart';
 
-class MyApp extends StatefulWidget {
+final personNameProvider = StateProvider<String>((ref) => '');
+
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final String personName = ref.watch(personNameProvider);
 
-class _MyAppState extends State<MyApp> {
-  String personName = '';
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text('AtendeSala!')),
         body: Center(
@@ -33,7 +31,7 @@ class _MyAppState extends State<MyApp> {
                       style: TextStyle(fontSize: 20)),
                   TextField(
                     onChanged: (text) {
-                      personName = text;
+                      ref.read(personNameProvider.notifier).state = text;
                     },
                   ),
 
@@ -65,8 +63,7 @@ class _MyAppState extends State<MyApp> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          EntrarSala(personName: personName)),
+                                      builder: (context) => const EntrarSala()),
                                 )
                               }
                           },
@@ -94,8 +91,7 @@ class _MyAppState extends State<MyApp> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          CriarSala(personName: personName)),
+                                      builder: (context) => const CriarSala()),
                                 )
                               }
                           },
@@ -111,9 +107,7 @@ class _MyAppState extends State<MyApp> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ListaRelatorio(
-                                personName: personName,
-                              )),
+                          builder: (context) => const ListaRelatorio()),
                     );
                   },
                   child: const Padding(

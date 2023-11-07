@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EntrarSala extends StatefulWidget {
-  final String personName;
-  const EntrarSala({Key? key, required this.personName}) : super(key: key);
+import '../main_screen/home.dart';
 
-  @override
-  State<EntrarSala> createState() => _EntrarSalaState();
-}
+final codigoSalaProvider = StateProvider<String>((ref) => '');
 
-class _EntrarSalaState extends State<EntrarSala> {
-  String codigoSala = '';
+class EntrarSala extends ConsumerWidget {
+  const EntrarSala({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final String personName = ref.watch(personNameProvider);
+
+    final String codigoSala = ref.watch(codigoSalaProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Entrando na Sala')),
       body: Center(
@@ -27,7 +28,7 @@ class _EntrarSalaState extends State<EntrarSala> {
                   style: const TextStyle(
                     fontSize: 30,
                   ),
-                  'Olá, ${widget.personName}!'),
+                  'Olá, $personName!'),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -36,7 +37,7 @@ class _EntrarSalaState extends State<EntrarSala> {
                     style: TextStyle(fontSize: 16)),
                 TextField(
                   onChanged: (text) {
-                    codigoSala = text;
+                    ref.read(codigoSalaProvider.notifier).state = text;
                   },
                 ),
                 Container(

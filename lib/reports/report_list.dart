@@ -1,80 +1,76 @@
-import 'package:atende_sala/main_screen/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ListaRelatorio extends StatefulWidget {
-  final String personName;
-  const ListaRelatorio({Key? key, required this.personName}) : super(key: key);
+final listaRelatorioProvider = StateProvider<List<Relatorios>>((ref) => [
+      Relatorios(
+          data: '01/01/2021',
+          nomeSala: 'Sala 1',
+          nomeProfessor: 'Professor 1',
+          quantidadeAlunosMaximo: 10,
+          quantidadeAlunosPresentes: 5),
+      Relatorios(
+          data: '02/01/2021',
+          nomeSala: 'Sala 2',
+          nomeProfessor: 'Professor 2',
+          quantidadeAlunosMaximo: 10,
+          quantidadeAlunosPresentes: 5),
+      Relatorios(
+          data: '03/01/2021',
+          nomeSala: 'Sala 3',
+          nomeProfessor: 'Professor 3',
+          quantidadeAlunosMaximo: 10,
+          quantidadeAlunosPresentes: 5),
+      Relatorios(
+          data: '04/01/2021',
+          nomeSala: 'Sala 4',
+          nomeProfessor: 'Professor 4',
+          quantidadeAlunosMaximo: 10,
+          quantidadeAlunosPresentes: 5),
+      Relatorios(
+          data: '05/01/2021',
+          nomeSala: 'Sala 5',
+          nomeProfessor: 'Professor 5',
+          quantidadeAlunosMaximo: 10,
+          quantidadeAlunosPresentes: 5),
+      Relatorios(
+          data: '06/01/2021',
+          nomeSala: 'Sala 6',
+          nomeProfessor: 'Professor 6',
+          quantidadeAlunosMaximo: 10,
+          quantidadeAlunosPresentes: 5),
+      Relatorios(
+          data: '07/01/2021',
+          nomeSala: 'Sala 7',
+          nomeProfessor: 'Professor 7',
+          quantidadeAlunosMaximo: 10,
+          quantidadeAlunosPresentes: 5),
+      Relatorios(
+          data: '08/01/2021',
+          nomeSala: 'Sala 8',
+          nomeProfessor: 'Professor 8',
+          quantidadeAlunosMaximo: 10,
+          quantidadeAlunosPresentes: 5),
+      Relatorios(
+          data: '09/01/2021',
+          nomeSala: 'Sala 9',
+          nomeProfessor: 'Professor 9',
+          quantidadeAlunosMaximo: 10,
+          quantidadeAlunosPresentes: 5),
+      Relatorios(
+          data: '10/01/2021',
+          nomeSala: 'Sala 10',
+          nomeProfessor: 'Professor 10',
+          quantidadeAlunosMaximo: 10,
+          quantidadeAlunosPresentes: 5),
+    ]);
 
-  @override
-  State<ListaRelatorio> createState() => _ListaRelatorioState();
-}
-
-class _ListaRelatorioState extends State<ListaRelatorio> {
-  List<Relatorios> listaRelatorios = [
-    Relatorios(
-        data: '01/01/2021',
-        nomeSala: 'Sala 1',
-        nomeProfessor: 'Professor 1',
-        quantidadeAlunosMaximo: 10,
-        quantidadeAlunosPresentes: 5),
-    Relatorios(
-        data: '02/01/2021',
-        nomeSala: 'Sala 2',
-        nomeProfessor: 'Professor 2',
-        quantidadeAlunosMaximo: 10,
-        quantidadeAlunosPresentes: 5),
-    Relatorios(
-        data: '03/01/2021',
-        nomeSala: 'Sala 3',
-        nomeProfessor: 'Professor 3',
-        quantidadeAlunosMaximo: 10,
-        quantidadeAlunosPresentes: 5),
-    Relatorios(
-        data: '04/01/2021',
-        nomeSala: 'Sala 4',
-        nomeProfessor: 'Professor 4',
-        quantidadeAlunosMaximo: 10,
-        quantidadeAlunosPresentes: 5),
-    Relatorios(
-        data: '05/01/2021',
-        nomeSala: 'Sala 5',
-        nomeProfessor: 'Professor 5',
-        quantidadeAlunosMaximo: 10,
-        quantidadeAlunosPresentes: 5),
-    Relatorios(
-        data: '06/01/2021',
-        nomeSala: 'Sala 6',
-        nomeProfessor: 'Professor 6',
-        quantidadeAlunosMaximo: 10,
-        quantidadeAlunosPresentes: 5),
-    Relatorios(
-        data: '07/01/2021',
-        nomeSala: 'Sala 7',
-        nomeProfessor: 'Professor 7',
-        quantidadeAlunosMaximo: 10,
-        quantidadeAlunosPresentes: 5),
-    Relatorios(
-        data: '08/01/2021',
-        nomeSala: 'Sala 8',
-        nomeProfessor: 'Professor 8',
-        quantidadeAlunosMaximo: 10,
-        quantidadeAlunosPresentes: 5),
-    Relatorios(
-        data: '09/01/2021',
-        nomeSala: 'Sala 9',
-        nomeProfessor: 'Professor 9',
-        quantidadeAlunosMaximo: 10,
-        quantidadeAlunosPresentes: 5),
-    Relatorios(
-        data: '10/01/2021',
-        nomeSala: 'Sala 10',
-        nomeProfessor: 'Professor 10',
-        quantidadeAlunosMaximo: 10,
-        quantidadeAlunosPresentes: 5),
-  ];
+class ListaRelatorio extends ConsumerWidget {
+  const ListaRelatorio({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final listaRelatorios = ref.watch(listaRelatorioProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Lista de Relatórios')),
       body: Center(
@@ -101,11 +97,11 @@ class _ListaRelatorioState extends State<ListaRelatorio> {
                       padding: const EdgeInsets.all(12.0),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(
+/*                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => (const MyApp())),
-                          );
+                          ); */
                         },
                         child: ListTile(
                           shape: RoundedRectangleBorder(

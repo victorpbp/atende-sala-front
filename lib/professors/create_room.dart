@@ -1,20 +1,23 @@
+import 'package:atende_sala/main_screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CriarSala extends StatefulWidget {
-  final String personName;
-  const CriarSala({Key? key, required this.personName}) : super(key: key);
+final roomTitleProvider = StateProvider<String>((ref) => '');
 
-  @override
-  State<CriarSala> createState() => _CriarSalaState();
-}
+final maxCapacityProvider = StateProvider<int>((ref) => 0);
 
-class _CriarSalaState extends State<CriarSala> {
-  String roomTitle = '';
-  int maxCapacity = 0;
+class CriarSala extends ConsumerWidget {
+  const CriarSala({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final String personName = ref.watch(personNameProvider);
+
+    final String roomTitle = ref.watch(roomTitleProvider);
+
+    final int maxCapacity = ref.watch(maxCapacityProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Criando a Sala')),
       body: Center(
@@ -28,7 +31,7 @@ class _CriarSalaState extends State<CriarSala> {
                 style: const TextStyle(
                   fontSize: 30,
                 ),
-                'Bem vindo, ${widget.personName}!'),
+                'Bem vindo, $personName!'),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -37,7 +40,7 @@ class _CriarSalaState extends State<CriarSala> {
                     style: TextStyle(fontSize: 16)),
                 TextField(
                   onChanged: (text) {
-                    roomTitle = text;
+                    ref.read(roomTitleProvider.notifier).state = text;
                   },
                 ),
               ],
@@ -55,7 +58,8 @@ class _CriarSalaState extends State<CriarSala> {
                     FilteringTextInputFormatter.digitsOnly,
                   ],
                   onChanged: (text) {
-                    maxCapacity = int.parse(text);
+                    ref.read(maxCapacityProvider.notifier).state =
+                        int.parse(text);
                   },
                 ),
               ],
