@@ -24,7 +24,7 @@ class Layout1 extends ConsumerWidget {
       width: 350,
       decoration: BoxDecoration(
           border: Border.all(
-              color: Colors.blue)), //Livrar dessa borda, tá pintando tudo
+              color: Colors.blue)),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(

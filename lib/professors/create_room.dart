@@ -59,6 +59,7 @@ class CriarSala extends ConsumerWidget {
                     FilteringTextInputFormatter.digitsOnly,
                   ],
                   onChanged: (text) {
+                    if (text == '') text = '0';
                     ref.read(maxCapacityProvider.notifier).state =
                         int.parse(text);
                   },
@@ -81,7 +82,7 @@ class CriarSala extends ConsumerWidget {
                             duration: Duration(seconds: 1)),
                       )
                     }
-                  else if (maxCapacity == 0)
+                  else if (maxCapacity < 1)
                     {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
