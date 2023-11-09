@@ -1,4 +1,5 @@
 import 'package:atende_sala/main_screen/home.dart';
+import 'package:atende_sala/professors/select_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -91,17 +92,12 @@ class CriarSala extends ConsumerWidget {
                     }
                   else
                     {
-                      //Navigator.push(
-                      //  context,
-                      //  MaterialPageRoute(
-                      //      builder: (context) => SalaProfessor()),
-                      //)
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SelecionarLayout()),
+                      )
                     }
-
-                  //Navigator.push(
-                  //  context,
-                  //  MaterialPageRoute(builder: (context) => SalaProfessor()),
-                  //)
                 },
               ),
             ),
