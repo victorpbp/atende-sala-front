@@ -12,10 +12,10 @@ class SelecionarLayout extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sala de Aula #00000')),
+      appBar: AppBar(title: const Text('Criando a Sala')),
       body: Center(
           child: SizedBox(
-        width: 300,
+        width: 350,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

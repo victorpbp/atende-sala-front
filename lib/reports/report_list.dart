@@ -188,7 +188,7 @@ class ListaRelatorio extends ConsumerWidget {
       appBar: AppBar(title: const Text('Lista de Relatórios')),
       body: Center(
           child: SizedBox(
-        width: 275,
+        width: 350,
         child: Container(
           margin: const EdgeInsets.only(top: 40),
           child: Column(

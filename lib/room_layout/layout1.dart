@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../main_screen/home.dart';
+import '../students/select_seat.dart';
+
 final layoutProvider1 = StateProvider<List<List>>((ref) => [
-      ['1A', '1B', '1C', '1D', '1E', '1F', '1G', '1H', '1I'],
-      ['2A', '2B', '2C', '2D', '2E', '2F', '2G', '2H', '2I'],
-      ['3A', '3B', '3C', '3D', '3E', '3F', '3G', '3H', '3I'],
-      ['4A', '4B', '4C', '4D', '4E', '4F', '4G', '4H', '4I'],
-      ['5A', '5B', '5C', '5D', '5E', '5F', '5G', '5H', '5I'],
-      ['6A', '6B', '6C', '6D', '6E', '6F', '6G', '6H', '6I'],
-      ['7A', '7B', '7C', '7D', '7E', '7F', '7G', '7H', '7I'],
+      ['1A', '1B', '1C', '1D', '1E', '1F', '1G'],
+      ['2A', '2B', '2C', '2D', '2E', '2F', '2G'],
+      ['3A', '3B', '3C', '3D', '3E', '3F', '3G'],
+      ['4A', '4B', '4C', '4D', '4E', '4F', '4G'],
+      ['5A', '5B', '5C', '5D', '5E', '5F', '5G'],
+      ['6A', '6B', '6C', '6D', '6E', '6F', '6G'],
+      ['7A', '7B', '7C', '7D', '7E', '7F', '7G'],
+      ['8A', '8B', '8C', '8D', '8E', '8F', '8G'],
+      ['9A', '9B', '9C', '9D', '9E', '9F', '9G'],
+      ['10A', '10B', '10C', '10D', '10E', '10F', '10G'],
     ]);
 
 class Layout1 extends ConsumerWidget {
@@ -18,13 +24,18 @@ class Layout1 extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final layout1 = ref.watch(layoutProvider1.notifier).state;
 
-    //int columnIndex = -1;
+    final bool isStudent = ref.watch(isStudentProvider);
+
+    final String selectedSeat = ref.watch(selectedSeatProvider);
+
+    int columnIndex = -1;
 
     return Container(
       width: 350,
-      decoration: BoxDecoration(
-          border: Border.all(
-              color: Colors.blue)),
+      height: isStudent ? 700 : 400,
+      decoration: isStudent
+          ? const BoxDecoration()
+          : BoxDecoration(border: Border.all(color: Colors.blue)),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -46,21 +57,37 @@ class Layout1 extends ConsumerWidget {
 
             SizedBox(
               //color: Colors.white,
-              height: 200,
               width: 350,
+              height: isStudent ? 600 : 300,
+
               child: GridView.count(
                   crossAxisCount: layout1[0].length,
                   children: List.generate((layout1.length * layout1[0].length),
                       (index) {
-                    //if (index % 11 == 0) columnIndex++;
-                    return const Center(
-                        //[Varia entre 0 e 6][Varia entre 0 e 10]
-                        child:
-                            //Text(layout1[columnIndex][index % layout1[0].length]),
-                            Icon(
-                      Icons.chair,
-                      color: Colors.grey,
-                    ));
+                    //Auxilia na identificação da coluna
+                    if (index % layout1[0].length == 0) columnIndex++;
+                    //Identifica a cadeira do loop atual
+                    String seat =
+                        layout1[columnIndex][index % layout1[0].length];
+                    return Center(
+                      //[Varia entre 0 e 6][Varia entre 0 e 10]
+                      child:
+                          //Text(layout1[columnIndex][index % layout1[0].length]),
+                          TextButton(
+                        child: Icon(
+                          Icons.chair,
+                          color:
+                              selectedSeat == seat ? Colors.green : Colors.grey,
+                        ),
+                        onPressed: () => {
+                          if (isStudent)
+                            {
+                              ref.read(selectedSeatProvider.notifier).state =
+                                  seat
+                            }
+                        },
+                      ),
+                    );
                   })),
             )
           ],

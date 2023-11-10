@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../main_screen/home.dart';
+import '../students/select_seat.dart';
+
 final layoutProvider1 = StateProvider<List<List>>((ref) => [
       ['1A', '1B', '1C', '1D', '1E', '1F'],
       ['2A', '2B', '2C', '2D', '2E', '2F'],
@@ -15,13 +18,18 @@ class Layout2 extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final layout2 = ref.watch(layoutProvider1.notifier).state;
 
-    //int columnIndex = -1;
+    final bool isStudent = ref.watch(isStudentProvider);
+
+    final String selectedSeat = ref.watch(selectedSeatProvider);
+
+    int columnIndex = -1;
 
     return Container(
       width: 350,
-      decoration: BoxDecoration(
-          border: Border.all(
-              color: Colors.blue)), //Livrar dessa borda, tá pintando tudo
+      height: isStudent ? 600 : 300,
+      decoration: isStudent
+          ? const BoxDecoration()
+          : BoxDecoration(border: Border.all(color: Colors.blue)),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -43,20 +51,36 @@ class Layout2 extends ConsumerWidget {
 
             SizedBox(
               //color: Colors.white,
-              height: 200,
               width: 350,
+              height: isStudent ? 500 : 200,
               child: GridView.count(
                   crossAxisCount: layout2[0].length,
                   children: List.generate((layout2.length * layout2[0].length),
                       (index) {
-                    //if (index % 11 == 0) columnIndex++;
-                    return const Center(
+                    //Auxilia na identificação da coluna
+                    if (index % layout2[0].length == 0) columnIndex++;
+                    //Identifica a cadeira do loop atual
+                    String seat =
+                        layout2[columnIndex][index % layout2[0].length];
+                    return Center(
                         //[Varia entre 0 e 6][Varia entre 0 e 10]
-                        child:
-                            //Text(layout2[columnIndex][index % layout2[0].length]),
-                            Icon(
-                      Icons.chair,
-                      color: Colors.grey,
+                        child: TextButton(
+                      child: Icon(
+                        Icons.chair,
+                        color:
+                            selectedSeat == seat ? Colors.green : Colors.grey,
+                      ),
+                      onPressed: () => {
+                        if (isStudent)
+                          if (ref.read(selectedSeatProvider.notifier).state ==
+                              seat)
+                            {ref.read(selectedSeatProvider.notifier).state = ''}
+                          else
+                            {
+                              ref.read(selectedSeatProvider.notifier).state =
+                                  seat
+                            }
+                      },
                     ));
                   })),
             )

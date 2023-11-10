@@ -14,7 +14,7 @@ class RelatorioIndividual extends ConsumerWidget {
         appBar: AppBar(title: const Text('Relatório de Aula')),
         body: Center(
           child: SizedBox(
-            width: 300,
+            width: 350,
             child: Container(
                 margin: const EdgeInsets.only(top: 40),
                 child: Column(

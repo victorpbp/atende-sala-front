@@ -1,3 +1,4 @@
+import 'package:atende_sala/students/select_seat.dart';
 import 'package:flutter/material.dart';
 import 'package:atende_sala/students/join_room.dart';
 import 'package:atende_sala/professors/create_room.dart';
@@ -6,6 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../reports/report_list.dart';
 
 final personNameProvider = StateProvider<String>((ref) => '');
+
+final isStudentProvider = StateProvider<bool>((ref) => true);
 
 class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -18,7 +21,7 @@ class MyApp extends ConsumerWidget {
         appBar: AppBar(title: const Text('AtendeSala!')),
         body: Center(
             child: SizedBox(
-          width: 300,
+          width: 350,
 
           // Coluna principal
           child: Column(
@@ -60,6 +63,8 @@ class MyApp extends ConsumerWidget {
                               }
                             else
                               {
+                                ref.read(isStudentProvider.notifier).state =
+                                    true,
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -88,6 +93,10 @@ class MyApp extends ConsumerWidget {
                               }
                             else
                               {
+                                ref.read(isStudentProvider.notifier).state =
+                                    false,
+                                ref.read(selectedSeatProvider.notifier).state =
+                                    '',
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

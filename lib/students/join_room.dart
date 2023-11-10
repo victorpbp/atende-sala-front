@@ -1,3 +1,4 @@
+import 'package:atende_sala/students/select_seat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +19,7 @@ class EntrarSala extends ConsumerWidget {
       appBar: AppBar(title: const Text('Entrando na Sala')),
       body: Center(
           child: SizedBox(
-        width: 275,
+        width: 350,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -59,10 +60,12 @@ class EntrarSala extends ConsumerWidget {
                         }
                       else
                         {
-                          //Navigator.push(
-                          //  context,
-                          //  MaterialPageRoute(builder: (context) => SalaAluno()),
-                          //)
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const SelecionarAssento()),
+                          )
                         }
                     },
                   ),

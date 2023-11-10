@@ -23,7 +23,7 @@ class CriarSala extends ConsumerWidget {
       appBar: AppBar(title: const Text('Criando a Sala')),
       body: Center(
           child: SizedBox(
-        width: 275,
+        width: 350,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
