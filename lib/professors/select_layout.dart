@@ -1,10 +1,9 @@
+import 'package:atende_sala/professors/create_room.dart';
 import 'package:atende_sala/room_layout/layout1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../room_layout/layout2.dart';
-
-final layoutProvider = StateProvider<int>((ref) => 0);
 
 class SelecionarLayout extends ConsumerWidget {
   const SelecionarLayout({Key? key}) : super(key: key);

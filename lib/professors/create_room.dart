@@ -8,6 +8,8 @@ final roomTitleProvider = StateProvider<String>((ref) => '');
 
 final maxCapacityProvider = StateProvider<int>((ref) => 0);
 
+final layoutProvider = StateProvider<int>((ref) => 0);
+
 class CriarSala extends ConsumerWidget {
   const CriarSala({Key? key}) : super(key: key);
 

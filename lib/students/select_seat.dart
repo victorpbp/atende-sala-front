@@ -1,4 +1,5 @@
 import 'package:atende_sala/room_layout/layout1.dart';
+import 'package:atende_sala/students/student_room.dart';
 import '../room_layout/layout2.dart';
 
 import 'package:atende_sala/students/join_room.dart';
@@ -30,24 +31,28 @@ class SelecionarAssento extends ConsumerWidget {
             //Até lá, usarei mockups
             const Layout2(),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(20.0),
+              ),
               onPressed: () => {
                 //Add aqui a transição para a tela de student_room
                 if (ref.watch(selectedSeatProvider.notifier).state == '')
                   {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                          content: Text("Por favor, selecione um assento."),
+                          content: Text("Por favor, selecione um assento.",
+                              style: TextStyle(fontSize: 16)),
                           duration: Duration(seconds: 1)),
                     )
                   }
-/*                 else
+                else
                   {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const SalaEstudante()),
                     )
-                  } */
+                  }
               },
               child: const Text('Confirmar Assento'),
             )
