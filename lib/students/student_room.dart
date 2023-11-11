@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../main_screen/home.dart';
+import '../professors/create_room.dart';
 
 //Isso aqui vai vir de um json que virá do Back, por enquanto, vou deixar mockado
 //Pode até ser uma lista com todo mundo da fila e eu procuro pelo nome da pessoa
@@ -16,6 +17,7 @@ class SalaEstudante extends ConsumerWidget {
     final String personName = ref.watch(personNameProvider);
     final String codigoSala = ref.watch(codigoSalaProvider);
     final int queuePosition = ref.watch(queuePositionProvider);
+    final String roomTitle = ref.watch(roomTitleProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text('Sala de Aula $codigoSala')),
@@ -26,6 +28,7 @@ class SalaEstudante extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Text(roomTitle, style: const TextStyle(fontSize: 20)),
             Text('Olá, $personName', style: const TextStyle(fontSize: 30)),
             Column(
               children: [

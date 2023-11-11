@@ -1,4 +1,5 @@
 import 'package:atende_sala/professors/create_room.dart';
+import 'package:atende_sala/professors/prof_room.dart';
 import 'package:atende_sala/room_layout/layout1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,14 +26,21 @@ class SelecionarLayout extends ConsumerWidget {
             TextButton(
                 onPressed: () => {
                       //Add aqui o push para o prof_room
-                      ref.read(layoutProvider.notifier).state = 0
+                      ref.read(layoutProvider.notifier).state = 0,
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SalaProfessor())),
                     },
                 child: const Layout1()),
             //Colocar um container e mudar de cor dependendo da abordagem
             TextButton(
               onPressed: () => {
-                //Add aqui o push para o prof_room
-                ref.read(layoutProvider.notifier).state = 1
+                ref.read(layoutProvider.notifier).state = 1,
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SalaProfessor())),
               },
               child: const Layout2(), //Chama o novo componente com o layout
             ),
