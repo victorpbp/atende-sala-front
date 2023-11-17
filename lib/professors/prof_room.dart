@@ -72,6 +72,25 @@ class SalaProfessor extends ConsumerWidget {
             //Mapa do layout2 da sala sinalizando os lugares e o aluno atual e próximo no atendimento
             layout == 0 ? const Layout1() : const Layout2(),
 
+            //Legenda para os assentos do layout das cores verde e laranja
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  children: const [
+                    Icon(Icons.chair, color: Colors.green),
+                    Text(' - Atual'),
+                  ],
+                ),
+                Row(
+                  children: const [
+                    Icon(Icons.chair, color: Colors.orange),
+                    Text(' - Próximo'),
+                  ],
+                ),
+              ],
+            ),
+
             //Botão para passar para o próximo aluno
             attending
                 ? ElevatedButton(
