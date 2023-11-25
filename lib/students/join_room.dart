@@ -1,8 +1,7 @@
+import 'package:atende_sala/main_screen/home.dart';
 import 'package:atende_sala/students/select_seat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../main_screen/home.dart';
 
 final codigoSalaProvider = StateProvider<String>((ref) => '');
 

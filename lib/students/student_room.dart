@@ -1,9 +1,8 @@
+import 'package:atende_sala/main_screen/home.dart';
+import 'package:atende_sala/professors/create_room.dart';
 import 'package:atende_sala/students/join_room.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../main_screen/home.dart';
-import '../professors/create_room.dart';
 
 //Isso aqui vai vir de um json que virá do Back, por enquanto, vou deixar mockado
 //Pode até ser uma lista com todo mundo da fila e eu procuro pelo nome da pessoa

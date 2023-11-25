@@ -1,7 +1,6 @@
 import 'package:atende_sala/room_layout/layout1.dart';
+import 'package:atende_sala/room_layout/layout2.dart';
 import 'package:atende_sala/students/student_room.dart';
-import '../room_layout/layout2.dart';
-
 import 'package:atende_sala/students/join_room.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

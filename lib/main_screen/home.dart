@@ -1,10 +1,9 @@
+import 'package:atende_sala/reports/report_list.dart';
 import 'package:atende_sala/students/select_seat.dart';
-import 'package:flutter/material.dart';
 import 'package:atende_sala/students/join_room.dart';
 import 'package:atende_sala/professors/create_room.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../reports/report_list.dart';
 
 final personNameProvider = StateProvider<String>((ref) => '');
 

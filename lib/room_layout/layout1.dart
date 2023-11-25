@@ -1,9 +1,8 @@
+import 'package:atende_sala/main_screen/home.dart';
 import 'package:atende_sala/professors/prof_room.dart';
+import 'package:atende_sala/students/select_seat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../main_screen/home.dart';
-import '../students/select_seat.dart';
 
 final layoutProvider1 = StateProvider<List<List>>((ref) => [
       ['1A', '1B', '1C', '1D', '1E', '1F', '1G'],
