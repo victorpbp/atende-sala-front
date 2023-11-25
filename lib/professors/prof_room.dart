@@ -157,11 +157,12 @@ class SalaProfessor extends ConsumerWidget {
                       content: Text("Você desfez da sala."),
                       duration: Duration(seconds: 1)),
                 ),
-                Navigator.push(
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const MyApp(),
                   ),
+                  (Route<dynamic> route) => false,
                 )
               },
               child:

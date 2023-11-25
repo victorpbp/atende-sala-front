@@ -91,11 +91,12 @@ class SalaEstudante extends ConsumerWidget {
                       content: Text("Você saiu da sala."),
                       duration: Duration(seconds: 1)),
                 ),
-                Navigator.push(
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const MyApp(),
                   ),
+                  (Route<dynamic> route) => false,
                 )
               },
               child: const Text('Sair da Sala', style: TextStyle(fontSize: 16)),
