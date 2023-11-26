@@ -5,6 +5,9 @@ import 'package:atende_sala/professors/create_room.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+//todo Enviar um Token e Nome (que ficam salvo em caché) para a rota correta
+//todo Receber o Token (caso enviado '') e salvar no caché no lugar da ''
+
 final personNameProvider = StateProvider<String>((ref) => '');
 
 final isStudentProvider = StateProvider<bool>((ref) => true);

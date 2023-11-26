@@ -6,8 +6,16 @@ import 'package:atende_sala/students/join_room.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-//Isso aqui vai vir de um json que virá do Back, por enquanto, vou deixar mockado
-//Pode até ser uma lista com todo mundo da fila e eu procuro pelo nome da pessoa
+//todo Requisição Períodica de Atualização da Fila - 10s
+// Retorna um objeto idêntico ao de criar a sala, para atualizar tudo
+
+//todo Requisição Next é para Iniciar Atendimento ou ir para o Próximo
+
+//todo Requisição Stop é para Parar Atendimento
+
+//todo Requisição de Encerrar Sala é para Encerrar a Sala
+// Retorna um objeto de relatório da aula
+
 final queueLengthProvider = StateProvider<int>((ref) => 0);
 final attendingProvider = StateProvider<bool>((ref) => false);
 final firstStudentNameProvider =

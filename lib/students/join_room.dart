@@ -3,6 +3,10 @@ import 'package:atende_sala/students/select_seat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+//todo Enviar CódigoSala
+//todo Receber erro ou a sala
+//todo Sala contém qual o Layout usado e o Nome da Sala
+
 final codigoSalaProvider = StateProvider<String>((ref) => '');
 
 class EntrarSala extends ConsumerWidget {

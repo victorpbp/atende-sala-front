@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final roomTitleProvider = StateProvider<String>((ref) => '');
 
-// todo VALOR MOCKADO
 final currentCapacityProvider = StateProvider<int>((ref) => 15);
+
 final maxCapacityProvider = StateProvider<int>((ref) => 0);
 
 final layoutProvider = StateProvider<int>((ref) => 0);

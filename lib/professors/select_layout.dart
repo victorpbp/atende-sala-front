@@ -5,6 +5,9 @@ import 'package:atende_sala/room_layout/layout2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+//todo Enviar NomeSala, Layout, QntMaxAlunos
+//todo Receber o Código da Sala, AtualAluno, Queue[]
+
 class SelecionarLayout extends ConsumerWidget {
   const SelecionarLayout({Key? key}) : super(key: key);
 

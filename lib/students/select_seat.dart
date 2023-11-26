@@ -5,6 +5,9 @@ import 'package:atende_sala/students/join_room.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+//todo Enviar CódigoSala, AssentoSelecionado
+//todo Receber posição do aluno na fila (null)
+
 final selectedSeatProvider = StateProvider<String>((ref) => '');
 
 class SelecionarAssento extends ConsumerWidget {

@@ -4,8 +4,21 @@ import 'package:atende_sala/students/join_room.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-//Isso aqui vai vir de um json que virá do Back, por enquanto, vou deixar mockado
-//Pode até ser uma lista com todo mundo da fila e eu procuro pelo nome da pessoa
+//todo Requisição Períodica de Atualização da Fila - 10s
+// Retorna a posição do aluno na fila
+// Só é chamada caso o Aluno esteja na fila
+// Aluno será kickado caso a rota seja chamada e a sala não exista mais
+
+//todo Requisação Pedir Atendimento
+// Retorna a posição do aluno na fila
+// Aluno será kickado caso peça atendimento e a sala não exista mais
+
+//todo Requisição Cancelar Atendimento
+// Retorna a posição do aluno na fila (null)
+// Desabilitar o botão caso seja sua vez
+
+//todo Requisição de Encerrar Sala é para Sair da Sala
+
 final queuePositionProvider = StateProvider<int>((ref) => -1);
 
 class SalaEstudante extends ConsumerWidget {
