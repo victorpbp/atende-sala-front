@@ -25,16 +25,18 @@ Tudo isso permite que o professor tenha um controle sobre cada uma de suas aulas
 
 ## Como instalar e rodar o AtendeSala
 
+### Localmente
+
 É pré-requisito que Flutter esteja instalado na máquina.  
 
 Baixe o código presente neste repositório e rode os seguintes comandos no terminal enquanto na root:
 
-
 flutter pub get  
 flutter run  
 
-
 Selecione a opção de navegador que preferir. Recomendamos o Google Chrome.  
+
+### Alternativamente: [Na Web](https://victorpbp.github.io/atende-sala-build-web/#/)  <-- Link para Github Pages da aplicação
 
 ## Repositórios  
 Para questões de organização, permitir mais fácil colaboração e não haver demasiados conflitos durante MR's, foi decidido dividir a aplicação em repositórios do Front-End e Back-End.  
