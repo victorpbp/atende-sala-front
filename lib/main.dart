@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:atende_sala/main_screen/home.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,10 +16,14 @@ final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
 //getInstance
 SharedPreferences prefs = '' as SharedPreferences;
 
+Provider dioProvider = '' as Provider;
+
 void main() async {
   //Isso garante que será inicializada a instância do SharedPreferences antes de qualquer coisa
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
+  //Garante a inicialização do Dio
+  dioProvider = Provider((ref) => Dio());
 
   runApp(
     ProviderScope(

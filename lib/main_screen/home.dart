@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:atende_sala/main.dart';
 import 'package:atende_sala/reports/report_list.dart';
 import 'package:atende_sala/students/select_seat.dart';
 import 'package:atende_sala/students/join_room.dart';
 import 'package:atende_sala/professors/create_room.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,16 +20,131 @@ final personNameProvider =
 
 final isStudentProvider = StateProvider<bool>((ref) => true);
 
+//Inicia o tratamento sobre as requisições
+
+//Repositório
+class PersonRepository {
+  final Dio dio;
+  final Ref ref;
+  final String token;
+  final String personName;
+  final bool isStudent;
+
+  PersonRepository(
+      {required this.token,
+      required this.personName,
+      required this.isStudent,
+      required this.dio,
+      required this.ref});
+
+  Future<String> createStudent() async {
+    final response = await dio.post(
+      'http://atende-sala-api-production.up.railway.app/api/user',
+      data: {
+        'name': personName,
+        'is_student': isStudent,
+        'token': token,
+      },
+    );
+
+    return response.data['token'];
+  }
+
+  Future<String> createProfessor() async {
+    final response = await dio.post(
+      'http://atende-sala-api-production.up.railway.app/api/create-class',
+      data: {
+        'name': personName,
+        'is_student': isStudent,
+        'token': token,
+      },
+    );
+
+    return response.data['token'];
+  }
+}
+
+//Provider
+
+final personRepositoryProvider = Provider((ref) {
+  final dio = ref.watch(dioProvider);
+  final token = ref.watch(tokenProvider);
+  final personName = ref.watch(personNameProvider);
+  final isStudent = ref.watch(isStudentProvider);
+  return PersonRepository(
+      ref: ref,
+      dio: dio,
+      token: token,
+      personName: personName,
+      isStudent: isStudent);
+});
+
+//Service
+
+class PersonService {
+  final PersonRepository personRepository;
+  final Ref ref;
+
+  PersonService({required this.personRepository, required this.ref});
+
+  Future<String> createStudent() async {
+    final token = await personRepository.createStudent();
+    ref.read(tokenProvider.notifier).state = token;
+    return token;
+  }
+
+  Future<String> createProfessor() async {
+    final token = await personRepository.createProfessor();
+    ref.read(tokenProvider.notifier).state = token;
+    return token;
+  }
+}
+
+final personServiceProvider = Provider((ref) {
+  final personRepository = ref.watch(personRepositoryProvider);
+  return PersonService(personRepository: personRepository, ref: ref);
+});
+
+// Controller
+
+class PersonController extends AsyncNotifier<String> {
+  //Valor inicial
+  @override
+  FutureOr<String> build() {
+    return ref.read(tokenProvider.notifier).state;
+  }
+
+  Future<void> createStudent() async {
+    final personService = ref.read(personServiceProvider);
+
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() => personService.createStudent());
+  }
+
+  Future<void> createProfessor() async {
+    final personService = ref.read(personServiceProvider);
+
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() => personService.createProfessor());
+  }
+}
+
+final personControllerProvider =
+    AsyncNotifierProvider<PersonController, String>(() => PersonController());
+
+//Termina o tratamento sobre as requisições
+
+//Aqui começa o MyApp
 class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final String personName = ref.watch(personNameProvider);
-    final String token = ref.watch(tokenProvider);
+    final person = ref.watch(personControllerProvider);
 
     return Scaffold(
-        appBar: AppBar(title: Text('AtendeSala!')),
+        appBar: AppBar(title: const Text('AtendeSala!')),
         body: Center(
             child: SizedBox(
           width: 350,
@@ -42,13 +160,6 @@ class MyApp extends ConsumerWidget {
                       style: TextStyle(fontSize: 20)),
                   TextFormField(
                     initialValue: prefs.getString('personName') ?? '',
-/*                     onSaved: (text) async {
-                      if (prefs.getString('personName') != '' &&
-                          prefs.getString('personName') != null) {
-                        ref.read(personNameProvider.notifier).state = text!;
-                        await prefs.setString('personName', text);
-                      }
-                    }, */
                     onChanged: (text) async {
                       ref.read(personNameProvider.notifier).state = text;
                       await prefs.setString('personName', text);
@@ -82,6 +193,30 @@ class MyApp extends ConsumerWidget {
                               {
                                 ref.read(isStudentProvider.notifier).state =
                                     true,
+                                //Cria o estudante
+                                ref
+                                    .read(personControllerProvider.notifier)
+                                    .createStudent(),
+                                person.when(
+                                  data: (token) async {
+                                    await prefs.setString('token', token);
+                                  },
+                                  loading: () {
+                                    const CircularProgressIndicator();
+                                  },
+                                  error: (error, stackTrace) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              "Erro ao criar o estudante."),
+                                          duration: Duration(seconds: 1)),
+                                    );
+                                  },
+                                ),
+                                //Vai para a tela de escolher a sala
+                                //Não está condicional de conseguir ou não criar
+                                //o estudante para que o app ainda seja funcional
+                                //mesmo que a integração não seja possível
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -114,6 +249,30 @@ class MyApp extends ConsumerWidget {
                                     false,
                                 ref.read(selectedSeatProvider.notifier).state =
                                     '',
+                                //Cria o professor
+                                ref
+                                    .read(personControllerProvider.notifier)
+                                    .createProfessor(),
+                                person.when(
+                                  data: (token) async {
+                                    await prefs.setString('token', token);
+                                  },
+                                  loading: () {
+                                    const CircularProgressIndicator();
+                                  },
+                                  error: (error, stackTrace) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              "Erro ao criar o professor."),
+                                          duration: Duration(seconds: 1)),
+                                    );
+                                  },
+                                ),
+                                //Vai para a tela de criar a sala
+                                //Não está condicional de conseguir ou não criar
+                                //o professor para que o app ainda seja funcional
+                                //mesmo que a integração não seja possível
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
