@@ -15,40 +15,51 @@ class SelecionarLayout extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('Criando a Sala')),
-      body: Center(
-          child: SizedBox(
-        width: 350,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const Text(
-              'Escolha o layout do local de aula',
-              style: TextStyle(fontSize: 20),
-            ),
-            TextButton(
-                onPressed: () => {
-                      //Add aqui o push para o prof_room
-                      ref.read(layoutProvider.notifier).state = 0,
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SalaProfessor())),
-                    },
-                child: const Layout1()),
-            //Colocar um container e mudar de cor dependendo da abordagem
-            TextButton(
-              onPressed: () => {
-                ref.read(layoutProvider.notifier).state = 1,
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SalaProfessor())),
-              },
-              child: const Layout2(), //Chama o novo componente com o layout
-            ),
-          ],
-        ),
-      )),
+      body: SingleChildScrollView(
+        child: Center(
+            child: SizedBox(
+          width: 350,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: const Text(
+                  'Escolha o layout do local de aula',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                child: TextButton(
+                    onPressed: () => {
+                          //Add aqui o push para o prof_room
+                          ref.read(layoutProvider.notifier).state = 0,
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SalaProfessor())),
+                        },
+                    child: const Layout1()),
+              ),
+              //Colocar um container e mudar de cor dependendo da abordagem
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                child: TextButton(
+                  onPressed: () => {
+                    ref.read(layoutProvider.notifier).state = 1,
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SalaProfessor())),
+                  },
+                  child: const Layout2(), //Chama o novo componente com o layout
+                ),
+              ),
+            ],
+          ),
+        )),
+      ),
     );
   }
 }

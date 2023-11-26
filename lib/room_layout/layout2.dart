@@ -31,7 +31,6 @@ class Layout2 extends ConsumerWidget {
 
     return Container(
       width: 350,
-      height: isStudent ? 600 : 300,
       decoration: isStudent
           ? const BoxDecoration()
           : BoxDecoration(border: Border.all(color: Colors.blue)),
@@ -55,9 +54,7 @@ class Layout2 extends ConsumerWidget {
             //Layout em si
 
             SizedBox(
-              //color: Colors.white,
-              width: 350,
-              height: isStudent ? 500 : 200,
+              height: 225,
               child: GridView.count(
                   crossAxisCount: layout2[0].length,
                   children: List.generate((layout2.length * layout2[0].length),
@@ -68,7 +65,7 @@ class Layout2 extends ConsumerWidget {
                     String seat =
                         layout2[columnIndex][index % layout2[0].length];
                     return Center(
-                        //[Varia entre 0 e 6][Varia entre 0 e 10]
+                        //[Varia entre Colunas][Varia entre Linhas]
                         child: TextButton(
                       child: Icon(
                         Icons.chair,

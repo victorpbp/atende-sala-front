@@ -1,3 +1,4 @@
+import 'package:atende_sala/main.dart';
 import 'package:atende_sala/reports/report_list.dart';
 import 'package:atende_sala/students/select_seat.dart';
 import 'package:atende_sala/students/join_room.dart';
@@ -8,7 +9,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 //todo Enviar um Token e Nome (que ficam salvo em caché) para a rota correta
 //todo Receber o Token (caso enviado '') e salvar no caché no lugar da ''
 
-final personNameProvider = StateProvider<String>((ref) => '');
+final tokenProvider =
+    StateProvider<String>((ref) => prefs.getString('token') ?? '');
+
+final personNameProvider =
+    StateProvider<String>((ref) => prefs.getString('personName') ?? '');
 
 final isStudentProvider = StateProvider<bool>((ref) => true);
 
@@ -18,9 +23,10 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final String personName = ref.watch(personNameProvider);
+    final String token = ref.watch(tokenProvider);
 
     return Scaffold(
-        appBar: AppBar(title: const Text('AtendeSala!')),
+        appBar: AppBar(title: Text('AtendeSala!')),
         body: Center(
             child: SizedBox(
           width: 350,
@@ -34,9 +40,18 @@ class MyApp extends ConsumerWidget {
                 children: [
                   const Text('Digite seu nome e pressione a opção desejada',
                       style: TextStyle(fontSize: 20)),
-                  TextField(
-                    onChanged: (text) {
+                  TextFormField(
+                    initialValue: prefs.getString('personName') ?? '',
+/*                     onSaved: (text) async {
+                      if (prefs.getString('personName') != '' &&
+                          prefs.getString('personName') != null) {
+                        ref.read(personNameProvider.notifier).state = text!;
+                        await prefs.setString('personName', text);
+                      }
+                    }, */
+                    onChanged: (text) async {
                       ref.read(personNameProvider.notifier).state = text;
+                      await prefs.setString('personName', text);
                     },
                   ),
 
