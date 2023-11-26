@@ -22,12 +22,12 @@ class Layout2 extends ConsumerWidget {
 
     final String selectedSeat = ref.watch(selectedSeatProvider);
 
+    final int activeStudent = ref.watch(activeStudentProvider);
+
     int columnIndex = -1;
 
     //Vão ser substituídos depois, mas preciso sinalizar quando é o primeiro e próximo aluno
-    final String firstStudentPosition = ref.watch(firstStudentPositionProvider);
-    final String secondStudentPosition =
-        ref.watch(secondStudentPositionProvider);
+    final queue = ref.watch(queueProvider.notifier).state;
 
     return Container(
       width: 350,
@@ -70,9 +70,11 @@ class Layout2 extends ConsumerWidget {
                       child: Icon(
                         Icons.chair,
                         color: (selectedSeat == seat ||
-                                (firstStudentPosition == seat) && !isStudent)
+                                (queue[activeStudent].position == seat) &&
+                                    !isStudent)
                             ? Colors.green
-                            : ((secondStudentPosition == seat) && !isStudent)
+                            : ((queue[activeStudent + 1].position == seat) &&
+                                    !isStudent)
                                 ? Colors.orange
                                 : Colors.grey,
                       ),

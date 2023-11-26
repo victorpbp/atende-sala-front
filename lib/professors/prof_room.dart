@@ -16,17 +16,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 //todo Requisição de Encerrar Sala é para Encerrar a Sala
 // Retorna um objeto de relatório da aula
 
-final queueLengthProvider = StateProvider<int>((ref) => 0);
+class Person {
+  final String name;
+  final String position;
+
+  Person(this.name, this.position);
+}
+
+final queueProvider = StateProvider<List<Person>>((ref) => [
+      Person('Victor Peixoto', '3A'),
+      Person('Alexandre Coelho', '3B'),
+      Person('Lorena Roberta', '3C'),
+      Person('', ''),
+      Person('', ''),
+    ]);
+
+final activeStudentProvider = StateProvider<int>((ref) => 0);
+
 final attendingProvider = StateProvider<bool>((ref) => false);
-final firstStudentNameProvider =
-    StateProvider<String>((ref) => 'Victor Peixoto');
-final firstStudentPositionProvider = StateProvider<String>((ref) => '3A');
-final secondStudentNameProvider =
-    StateProvider<String>((ref) => 'Alexandre Coelho');
-final secondStudentPositionProvider = StateProvider<String>((ref) => '3B');
-final thirdStudentNameProvider =
-    StateProvider<String>((ref) => 'Lorena Roberta');
-final thirdStudentPositionProvider = StateProvider<String>((ref) => '3C');
 
 class SalaProfessor extends ConsumerWidget {
   const SalaProfessor({Key? key}) : super(key: key);
@@ -35,17 +42,14 @@ class SalaProfessor extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final String codigoSala = ref.watch(codigoSalaProvider);
     final String roomTitle = ref.watch(roomTitleProvider);
-    final bool attending = ref.watch(attendingProvider);
-    final String firstStudentName = ref.watch(firstStudentNameProvider);
-    final String firstStudentPosition = ref.watch(firstStudentPositionProvider);
-    final String secondStudentName = ref.watch(secondStudentNameProvider);
-    final String secondStudentPosition =
-        ref.watch(secondStudentPositionProvider);
-    final String thirdStudentName = ref.watch(thirdStudentNameProvider);
-    final String thirdStudentPosition = ref.watch(thirdStudentPositionProvider);
+
     final int layout = ref.watch(layoutProvider);
     final int currentCapacity = ref.watch(currentCapacityProvider);
     final int maxCapacity = ref.watch(maxCapacityProvider);
+
+    final bool attending = ref.watch(attendingProvider);
+    final List<Person> queue = ref.watch(queueProvider);
+    final int activeStudent = ref.watch(activeStudentProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text('Sala de Aula $codigoSala')),
@@ -68,10 +72,13 @@ class SalaProfessor extends ConsumerWidget {
                     style: const TextStyle(fontSize: 20)),
                 Text(
                     attending
-                        ? 'Atual: $firstStudentName'
-                        : 'Próximo: $firstStudentName',
+                        ? 'Atual: ${queue[activeStudent].name}'
+                        : 'Próximo: ${queue[activeStudent].name}',
                     style: const TextStyle(fontSize: 24)),
-                Text(attending ? 'Próximo: $secondStudentName' : '',
+                Text(
+                    attending
+                        ? 'Próximo: ${queue[activeStudent + 1].name}'
+                        : '',
                     style: const TextStyle(fontSize: 16)),
               ],
             ),
@@ -99,30 +106,15 @@ class SalaProfessor extends ConsumerWidget {
             ),
 
             //Botão para passar para o próximo aluno
-            attending
+            attending && (activeStudent < 3)
                 ? ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Colors.blue,
                       padding: const EdgeInsets.all(20.0),
                     ),
                     onPressed: () => {
-                          //Aluno em questão ainda precisa ser removido da fila
-                          ref.read(firstStudentNameProvider.notifier).state =
-                              secondStudentName,
-                          ref
-                              .read(firstStudentPositionProvider.notifier)
-                              .state = secondStudentPosition,
-                          ref.read(secondStudentNameProvider.notifier).state =
-                              thirdStudentName,
-                          ref
-                              .read(secondStudentPositionProvider.notifier)
-                              .state = thirdStudentPosition,
-                          ref.read(thirdStudentNameProvider.notifier).state =
-                              '',
-                          ref
-                              .read(thirdStudentPositionProvider.notifier)
-                              .state = '',
-
+                          ref.read(activeStudentProvider.notifier).state =
+                              activeStudent + 1,
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Fila atualizada."),
@@ -145,7 +137,7 @@ class SalaProfessor extends ConsumerWidget {
                         const SnackBar(
                             content: Text("Status de atendimento alterado."),
                             duration: Duration(seconds: 1)),
-                      )
+                      ),
                     },
                 child: Text(
                     style: const TextStyle(fontSize: 16),
