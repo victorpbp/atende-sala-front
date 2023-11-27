@@ -39,7 +39,7 @@ class PersonRepository {
 
   Future<String> createStudent() async {
     final response = await dio.post(
-      'http://atende-sala-api-production.up.railway.app/api/user',
+      'https://atende-sala-api-production.up.railway.app/user',
       data: {
         'name': personName,
         'is_student': isStudent,
@@ -52,7 +52,7 @@ class PersonRepository {
 
   Future<String> createProfessor() async {
     final response = await dio.post(
-      'http://atende-sala-api-production.up.railway.app/api/create-class',
+      'https://atende-sala-api-production.up.railway.app/create-class',
       data: {
         'name': personName,
         'is_student': isStudent,

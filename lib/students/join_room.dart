@@ -63,6 +63,7 @@ class EntrarSala extends ConsumerWidget {
                         }
                       else
                         {
+                          ref.read(selectedSeatProvider.notifier).state = '',
                           Navigator.push(
                             context,
                             MaterialPageRoute(

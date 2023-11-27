@@ -32,7 +32,7 @@ class SelecionarAssento extends ConsumerWidget {
               ),
               //Será necessário pegar as informações da sala e descobrir o layout sendo usado
               //Até lá, usarei mockups
-              const Layout2(),
+              codigoSala == '1' ? const Layout1() : const Layout2(),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(20.0),
