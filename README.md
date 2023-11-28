@@ -41,7 +41,7 @@ Selecione a opção de navegador que preferir. Recomendamos o Google Chrome.
 ## Repositórios  
 Para questões de organização, permitir mais fácil colaboração e não haver demasiados conflitos durante MR's, foi decidido dividir a aplicação em repositórios do Front-End e Back-End.  
 ### [Front-End](https://github.com/victorpbp/atende-sala-front)   
-### [Back-End](https://github.com/Alexandre010xC/atende-sala-api)   
+### [Back-End](https://github.com/Alexandre010xC/atende-sala-back) 
 
 ## Equipe
 
